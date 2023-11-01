@@ -1,11 +1,11 @@
-import nextcord
-from nextcord.ext import commands, tasks
-import os
-import time
-import asyncio
-import mysql.connector
-from dotenv import load_dotenv
-load_dotenv()
+    import nextcord
+    from nextcord.ext import commands, tasks
+    import os
+    import time
+    import asyncio
+    import mysql.connector
+    from dotenv import load_dotenv
+    load_dotenv()
 
 class AutomatedDatabaseBackup(commands.Cog):
     def __init__(self, bot):
@@ -23,7 +23,7 @@ class AutomatedDatabaseBackup(commands.Cog):
             database="{os.getenv('MYSQL_BOT_DB)}"  # Ensure this is the name of your database
         )
 
-    @tasks.loop(minutes=1)
+    @tasks.loop(minutes={os.getenv('BACKUP_INTERVAL')}})
     async def backup_task(self):
         cursor = self.conn.cursor()
         cursor.execute("SELECT DISTINCT database_name FROM auto_backup_preferences")
