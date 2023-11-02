@@ -1,30 +1,35 @@
-    import nextcord
-    from nextcord.ext import commands, tasks
-    import os
-    import time
-    import asyncio
-    import mysql.connector
-    from dotenv import load_dotenv
-    load_dotenv()
+import nextcord
+from nextcord.ext import commands, tasks
+import os
+import time
+import asyncio
+import mysql.connector
+from dotenv import load_dotenv
+load_dotenv()
 
 class AutomatedDatabaseBackup(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.conn = self.create_connection()
-        self.backup_task.start()
+        backup_interval = os.getenv('BACKUP_INTERVAL')
+        if backup_interval:
+            backup_interval = float(backup_interval)
+        else:
+            backup_interval = 60.0  # Default to 60 minutes if not set
+        self.backup_task = tasks.loop(minutes=backup_interval)(self._backup_task)
+        self.backup_task.start()  # Start the loop when the bot starts
 
-    guild_id = 995986682228768799
+    guild_id = int(os.getenv('GUILD_ID'))
 
     def create_connection(self):
         return mysql.connector.connect(
             host=os.getenv('MYSQL_HOST'),
             user=os.getenv('MYSQL_USER'),
             password=os.getenv('MYSQL_PASS'),
-            database="{os.getenv('MYSQL_BOT_DB)}"  # Ensure this is the name of your database
+            database=os.getenv('MYSQL_BOT_DB')  # Ensure this is the name of your database
         )
 
-    @tasks.loop(minutes={os.getenv('BACKUP_INTERVAL')}})
-    async def backup_task(self):
+    async def _backup_task(self):
         cursor = self.conn.cursor()
         cursor.execute("SELECT DISTINCT database_name FROM auto_backup_preferences")
         databases = cursor.fetchall()
@@ -44,9 +49,14 @@ class AutomatedDatabaseBackup(commands.Cog):
         
         command = f'"{os.getenv("MYSQL_LOCATION")}\\mysqldump" --user={os.getenv("MYSQL_USER")} --password={os.getenv("MYSQL_PASS")} --host={os.getenv("MYSQL_HOST")} {database} > {backup_file}'
 
-        channel = self.bot.get_channel(1164237581333041242)
+        channel_id = os.getenv("AUTO_BACKUP_CHANNEL_ID")
+        if channel_id is None:
+            print("AUTO_BACKUP_CHANNEL_ID environment variable is not set!")
+            return
+
+        channel = self.bot.get_channel(int(channel_id))
         if channel is None:
-            print(f"Couldn't find the channel with ID 1164237581333041242!")
+            print(f"Couldn't find the channel with ID {channel_id}!")
             return
         await channel.send(f"Taking backup for database `{database}`...")
         print(f"Taking backup for database {database}...")

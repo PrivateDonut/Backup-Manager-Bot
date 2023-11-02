@@ -8,7 +8,7 @@ class DatabaseBackup(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    guild_id = 995986682228768799
+    guild_id = int(os.getenv('GUILD_ID'))
 
     @nextcord.slash_command(
         name="database_backup",

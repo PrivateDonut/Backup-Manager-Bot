@@ -3,7 +3,7 @@ from nextcord.ext import commands
 import os
 import datetime
 
-guild_id = 995986682228768799
+guild_id = int(os.getenv('GUILD_ID'))
 class ListBackups(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
