@@ -27,7 +27,7 @@ class DatabaseBackup(commands.Cog):
         timestamp = time.strftime('%Y%m%d%H%M%S')
         backup_file = os.path.join(db_folder_path, f"{database}_{timestamp}.sql")
         
-        command = f'"C:\\Program Files\\MySQL\\MySQL Server 8.0\\bin\\mysqldump" --user={os.getenv("MYSQL_USER")} --password={os.getenv("MYSQL_PASS")} --host={os.getenv("MYSQL_HOST")} {database} > {backup_file}'
+        command = f'"{os.getenv("MYSQL_LOCATION")}\\mysqldump" --user={os.getenv("MYSQL_USER")} --password={os.getenv("MYSQL_PASS")} --host={os.getenv("MYSQL_HOST")} {database} > {backup_file}'
 
         # Inform the user that the backup process has started
         await interaction.send(f"Backup for `{database}` is in progress...")  
