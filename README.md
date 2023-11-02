@@ -46,7 +46,7 @@ How to install on Debian
 4. backup_auto_add_db {database name}
 
 - Add a database you wish to be backed up automatically(default every 12 hours)
-- Example: /backup_auto_add_db website
+  - Example: /backup_auto_add_db website
 
 5. backup_auto_remove_db {database name}
 
