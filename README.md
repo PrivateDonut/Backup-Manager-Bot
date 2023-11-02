@@ -4,10 +4,9 @@ The Database Management Discord Bot, developed in Python, offers a robust soluti
 
 ## Installation
 
-Coming soon....
+[How To Install On Windows](https://github.com/PrivateDonut/Backup-Manager-Bot/wiki/How-to-install-Backup-Manager-Bot-on-Windows "How To Install On Windows")
 
-How to install on Windows
-How to install on Debian
+How to install on Debian(Coming soon)
 
 ## Commands
 
@@ -15,43 +14,42 @@ How to install on Debian
 
 1. database_list {database name}
 
- - List the last two backups available for the selected database
- - Example: /database_list website
+   - List the last two backups available for the selected database
+   - Example: /database_list website
 
 2. database_backup {database name}
 
- - Select the database you wish to backup.
- - Example: /database_backup website
+   - Select the database you wish to backup.
+   - Example: /database_backup website
 
 3. database_restore {databasename} {backup_name}
 
- - Restore a local backed up database.
- - The backup name has to include the full name from the backup folder + the .sql extension
- - Example: /database_restore website website_20231020112604.sql
+   - Restore a local backed up database.
+   - The backup name has to include the full name from the backup folder + the .sql extension
+   - Example: /database_restore website website_20231020112604.sql
 
 **Automated Commands**
 
 1. backup_auto_start
-
    - Enable automated backups for your MySQL Databases.
 
 2. backup_auto_stop
 
- - Disable automated backups for your MySQL Databases.
+   - Disable automated backups for your MySQL Databases.
 
 3. backup_auto_list_db
 
- - Lists all databases that are setup that backs up automatically.
+   - Lists all databases that are setup that backs up automatically.
 
 4. backup_auto_add_db {database name}
 
- - Add a database you wish to be backed up automatically(default every 12 hours)
-  - Example: /backup_auto_add_db website
+   - Add a database you wish to be backed up automatically(default every 12 hours)
+   - Example: /backup_auto_add_db website
 
 5. backup_auto_remove_db {database name}
 
- - Remove a database you wish to no longer take automatic backups from.
- - Example: /backup_auto_remove_db website
+   - Remove a database you wish to no longer take automatic backups from.
+   - Example: /backup_auto_remove_db website
 
 ## Screenshots
 
